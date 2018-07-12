@@ -10,6 +10,7 @@
     "@types/react-navigation": "^2.0.10",
     "@types/react-redux": "^6.0.4",
     "@types/react-test-renderer": "^16.0.1",
+    "@types/uuid": "^3.4.3",
     "concurrently": "^3.6.0",
     "jest-expo": "~27.0.0",
     "react-native-scripts": "1.14.0",
@@ -35,11 +36,14 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "@types/react-router-native": "^4.2.3",
     "es6-symbol": "^3.1.1",
     "expo": "^27.0.1",
     "mobx": "^4.3.1",
     "mobx-react": "^5.2.3",
     "react": "16.3.1",
-    "react-native": "~0.55.2"
+    "react-native": "~0.55.2",
+    "react-router-native": "^4.3.0",
+    "uuid": "^3.3.2"
   }
 }
