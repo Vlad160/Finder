@@ -2,22 +2,19 @@ import React, { Component, ReactNode, ReactElement } from 'react';
 import todoStore, { ITodo } from '../stores/todoStore';
 import { Card, CardItem, Body, Text, SwipeRow, Button, Icon } from 'native-base';
 import { observable } from 'mobx';
+import { observer } from 'mobx-react';
 
 export interface ITodoProps {
     item: ITodo;
 }
+
+@observer
 export default class Todo extends Component<ITodoProps> {
 
     @observable isOpen = false;
 
     render(): ReactNode {
         return (
-            // <SwipeRow leftOpenValue={75} left={
-            //     <Button success onPress={() => this.toggleTodo()}>
-            //         <Icon active name="add" />
-            //     </Button>
-            // } style={{ padding: 0, margin: 0 }} body={this.renderTodo()}>
-            // </SwipeRow>
             this.renderTodo()
         )
     }
@@ -26,13 +23,13 @@ export default class Todo extends Component<ITodoProps> {
         const { item } = this.props;
         return (
             <Card>
-                <CardItem header button onPress={this.toggleTodo}>
+                <CardItem header button onPress={this.handleClick}>
                     <Text>
                         {item.summary}
                     </Text>
                 </CardItem>
                 {this.isOpen && this.renderTodoBody()}
-            </Card>
+            </Card >
         )
     }
     private renderTodoBody(): ReactNode {
@@ -57,5 +54,10 @@ export default class Todo extends Component<ITodoProps> {
         const { item: todo } = this.props;
         // todo.isComplete = !todo.isComplete;
         todoStore.updateTodo(todo, { ...todo, isComplete: !todo.isComplete });
+    }
+
+    private onSwipe(): void {
+        console.log('ON OPEN');
+        console.log(arguments);
     }
 }

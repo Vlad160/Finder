@@ -1,4 +1,4 @@
-import { observable } from 'mobx';
+import { observable, IObservableArray } from 'mobx';
 import uuidv4 from 'uuid/v4';
 export interface ITodo {
     id?: string;
@@ -31,7 +31,7 @@ const getMock = () => new Todo({
 })
 
 export class TodoStore {
-    @observable todos: Array<Todo> = Array(10).fill(5).map(getMock);
+    @observable todos: IObservableArray<Todo> = Array(10).fill(5).map(getMock) as IObservableArray<Todo>;
 
     createTodo(todoItem: ITodo): void {
         this.todos.push(new Todo(todoItem))

@@ -1,7 +1,7 @@
 import React, { Component, ReactNode } from 'react';
 import todoStore, { ITodo } from '../../stores/todoStore';
 import Todo from '../../components/todo';
-import { Content, Tabs, Tab, List, Container, Fab, Icon } from 'native-base';
+import { Content, Tabs, Tab, List, Container, Fab, Icon, DeckSwiper } from 'native-base';
 import { partition } from 'lodash';
 import { observer } from 'mobx-react';
 
