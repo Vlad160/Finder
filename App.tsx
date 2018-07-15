@@ -1,12 +1,13 @@
 import React, { ReactNode } from 'react';
 import Expo from 'expo';
-import { Container } from 'native-base';
+import { Container, Root } from 'native-base';
 import TodoList from './src/screens/todo-list/todo-list';
 import Home from './src/screens/home/home';
 import TopHeader from './src/components/top-header';
-import { NativeRouter, Route, Redirect } from 'react-router-native';
+import { NativeRouter, Route } from 'react-router-native';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
+import CreateTodo from './src/components/create-todo';
 
 @observer
 export default class App extends React.Component {
@@ -15,9 +16,11 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <NativeRouter>
-        {this.fontsLoaded ? this.renderMainScreen() : <Container></Container>}
-      </NativeRouter>
+      <Root>
+        <NativeRouter>
+          {this.fontsLoaded && this.renderMainScreen()}
+        </NativeRouter>
+      </Root>
     );
   }
 
@@ -27,6 +30,7 @@ export default class App extends React.Component {
         <TopHeader />
         <Route exact path="/" component={Home} />
         <Route path="/todos" component={TodoList} />
+        <Route path="/create" component={CreateTodo} />
       </Container>
     )
   }

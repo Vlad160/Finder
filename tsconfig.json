@@ -22,7 +22,7 @@
     ],
   },
   "files": [
-    "./../App.tsx"
+    "./App.tsx"
   ],
   "include": [
     "src"

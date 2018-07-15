@@ -1,12 +1,21 @@
 import React, { ReactNode, Component } from 'react';
-import { Header, Left, Body, Title, Right } from 'native-base';
+import { Header, Left, Body, Title, Right, Button, Icon } from 'native-base';
+import { withRouter } from 'react-router';
 
-export default class TopHeader extends Component {
+@withRouter
+export default class TopHeader extends Component<any> {
 
+    constructor(props: any) {
+        super(props);
+    }
     render(): ReactNode {
         return (
             <Header>
-                <Left />
+                <Left>
+                    <Button transparent onPress={() => this.props.history.goBack()}>
+                        <Icon type='Entypo' name='arrow-left' />
+                    </Button>
+                </Left>
                 <Body>
                     <Title>Welcome!</Title>
                 </Body>

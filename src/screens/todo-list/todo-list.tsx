@@ -1,12 +1,12 @@
 import React, { Component, ReactNode } from 'react';
 import todoStore, { ITodo } from '../../stores/todoStore';
-import Todo from '../../components/todo';
-import { Content, Tabs, Tab, List, Container, Fab, Icon, DeckSwiper } from 'native-base';
+import { Content, Tabs, Tab, List, Container, Fab, Icon } from 'native-base';
 import { partition } from 'lodash';
 import { observer } from 'mobx-react';
+import SwipeableTodo from '../../components/swipeable-todo';
 
 @observer
-export default class TodoList extends Component {
+export default class TodoList extends Component<any> {
 
     constructor(props: any) {
         super(props);
@@ -24,7 +24,7 @@ export default class TodoList extends Component {
                         {this.renderTodoList(completed)}
                     </Tab>
                 </Tabs>
-                <Fab position="bottomRight" onPress={() => alert('TODO')}>
+                <Fab position="bottomRight" onPress={() => this.props.history.push('/create')}>
                     <Icon name="edit" type="Entypo" />
                 </Fab>
             </Container>
@@ -34,7 +34,7 @@ export default class TodoList extends Component {
     private renderTodoList(todos: Array<ITodo>): ReactNode {
         return (
             <Content>
-                <List dataArray={todos} renderRow={(item) => <Todo key={item.id} item={item} />} >
+                <List dataArray={todos} renderRow={(item) => <SwipeableTodo key={item.id} item={item} />} >
                 </List>
             </Content>
         )

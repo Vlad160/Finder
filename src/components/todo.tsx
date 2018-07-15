@@ -1,8 +1,9 @@
 import React, { Component, ReactNode, ReactElement } from 'react';
-import todoStore, { ITodo } from '../stores/todoStore';
-import { Card, CardItem, Body, Text, SwipeRow, Button, Icon } from 'native-base';
+import { ITodo } from '../stores/todoStore';
+import { Card, CardItem, Body } from 'native-base';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
+import { Text } from 'react-native';
 
 export interface ITodoProps {
     item: ITodo;
@@ -48,16 +49,5 @@ export default class Todo extends Component<ITodoProps> {
     handleClick = () => {
         console.log('Clicked!');
         this.isOpen = !this.isOpen;
-    }
-
-    toggleTodo = () => {
-        const { item: todo } = this.props;
-        // todo.isComplete = !todo.isComplete;
-        todoStore.updateTodo(todo, { ...todo, isComplete: !todo.isComplete });
-    }
-
-    private onSwipe(): void {
-        console.log('ON OPEN');
-        console.log(arguments);
     }
 }
