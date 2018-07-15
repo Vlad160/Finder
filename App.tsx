@@ -1,54 +1,40 @@
-import React from "react";
-import { View, Text, StyleSheet, Button } from "react-native";
-import Reactive from "./src/components/reactive";
-import store from "./src/stores/reactiveStore";
-import todoStore from './src/stores/todoStore';
-import List from './src/components/list';
-import { NativeRouter, Router, Route, Link } from 'react-router-native';
-import { Todo } from './src/stores/todoStore';
-export interface Props { }
-export interface State { }
+import React, { ReactNode } from 'react';
+import Expo from 'expo';
+import { Container } from 'native-base';
+import TodoList from './src/screens/todo-list/todo-list';
+import Home from './src/screens/home/home';
+import TopHeader from './src/components/top-header';
+import { NativeRouter, Route, Redirect } from 'react-router-native';
+import { observable } from 'mobx';
+import { observer } from 'mobx-react';
 
-export default class App extends React.Component<Props, State> {
+@observer
+export default class App extends React.Component {
+
+  @observable fontsLoaded = false;
+
   render() {
     return (
       <NativeRouter>
-        <View>
-          <Text style={styles.welcome}>
-            Welcome to React Native!
-        </Text>
-          <Link to="/list">
-            <Text>Go!</Text>
-          </Link>
-          <Link to="/reactive">
-            <Text>Go to reactive!</Text>
-          </Link>
-          <Link to="/todos">
-            <Text>Go to todos!</Text>
-          </Link>
-          <Route exact path="/list" render={() => <List store={todoStore} />} />
-          <Route exact path="/reactive" render={() => <Reactive store={store} />} />
-        </View>
+        {this.fontsLoaded ? this.renderMainScreen() : <Container></Container>}
       </NativeRouter>
     );
   }
-}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
+  renderMainScreen(): ReactNode {
+    return (
+      <Container>
+        <TopHeader />
+        <Route exact path="/" component={Home} />
+        <Route path="/todos" component={TodoList} />
+      </Container>
+    )
+  }
+  async componentWillMount(): Promise<void> {
+    await Expo.Font.loadAsync({
+      'Roboto': require('native-base/Fonts/Roboto.ttf'),
+      'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf')
+    })
+    this.fontsLoaded = true;
+  }
+}
