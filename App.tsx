@@ -4,7 +4,7 @@ import { Container, Root } from 'native-base';
 import TodoList from './src/screens/todo-list/todo-list';
 import Home from './src/screens/home/home';
 import TopHeader from './src/components/top-header';
-import { NativeRouter, Route } from 'react-router-native';
+import { NativeRouter, Route, BackButton } from 'react-router-native';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 import CreateTodo from './src/components/create-todo';
@@ -18,7 +18,9 @@ export default class App extends React.Component {
     return (
       <Root>
         <NativeRouter>
-          {this.fontsLoaded && this.renderMainScreen()}
+          <BackButton>
+            {this.fontsLoaded && this.renderMainScreen()}
+          </BackButton>
         </NativeRouter>
       </Root>
     );
