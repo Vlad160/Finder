@@ -1,7 +1,7 @@
-import { Component, ReactNode } from 'react';
+import { Component, ReactNode, PureComponent } from 'react';
 import React from 'react';
-import { default as Swipeable } from 'react-native-swipeable';
-import { View, StyleSheet } from 'react-native';
+import { default as Swipeable } from 'react-native-swipeable-row';
+import { View, StyleSheet, ScrollView, InteractionManager } from 'react-native';
 import Todo from './todo';
 import { ITodo } from '../stores/todoStore';
 import { Icon } from 'native-base';
@@ -9,7 +9,7 @@ import { Icon } from 'native-base';
 export interface ISwipeableTodoProps {
     item: ITodo
 }
-export default class SwipeableTodo extends Component<ISwipeableTodoProps> {
+export default class SwipeableTodo extends PureComponent<ISwipeableTodoProps> {
 
     todo: ITodo = this.props.item;
 
@@ -33,7 +33,9 @@ export default class SwipeableTodo extends Component<ISwipeableTodoProps> {
 
     toggleTodo(): void {
         const { item } = this.props;
-        item.isComplete = !item.isComplete
+        InteractionManager.runAfterInteractions(() => {
+            item.isComplete = !item.isComplete
+        })
     }
 
 }

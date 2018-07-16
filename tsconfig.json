@@ -14,7 +14,12 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "skipLibCheck": true,
+    "baseUrl": ".",
     "moduleResolution": "node",
+    "typeRoots": [
+      "node_modules/@types",
+      "node_modules/moment"
+    ],
     "lib": [
       "dom",
       "es2015",

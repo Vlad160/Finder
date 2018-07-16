@@ -3,7 +3,8 @@ import { ITodo } from '../stores/todoStore';
 import { Card, CardItem, Body } from 'native-base';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
-import { Text } from 'react-native';
+import moment from 'moment';
+import { Text, StyleSheet, FlatList } from 'react-native';
 
 export interface ITodoProps {
     item: ITodo;
@@ -25,7 +26,7 @@ export default class Todo extends Component<ITodoProps> {
         return (
             <Card>
                 <CardItem header button onPress={this.handleClick}>
-                    <Text>
+                    <Text style={{ fontSize: 16 }}>
                         {item.summary}
                     </Text>
                 </CardItem>
@@ -36,18 +37,40 @@ export default class Todo extends Component<ITodoProps> {
     private renderTodoBody(): ReactNode {
         const { item } = this.props;
         return (
-            <CardItem>
-                <Body>
-                    <Text>
-                        {item.description}
-                    </Text>
-                </Body>
-            </CardItem>
+            <>
+                <CardItem>
+                    <Body>
+                        <Text>
+                            {item.description}
+                        </Text>
+                        {item.subtasks && item.subtasks.length && (
+                            <FlatList data={item.subtasks}
+                                keyExtractor={(todo) => todo.id}
+                                renderItem={({ item }) => <Text>{item.summary}</Text>}
+                            >
+                            </FlatList>
+                        )}
+                    </Body>
+                </CardItem>
+                <CardItem footer style={styles.footer}>
+                    <Text>{moment(item.createdAt).format('MMM Do YY')}</Text>
+                </CardItem>
+            </>
         )
     }
 
     handleClick = () => {
-        console.log('Clicked!');
         this.isOpen = !this.isOpen;
     }
 }
+
+const styles = StyleSheet.create({
+    header: {
+        fontSize: 18
+    },
+    footer: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'flex-end'
+    }
+})

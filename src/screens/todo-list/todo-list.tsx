@@ -1,9 +1,10 @@
 import React, { Component, ReactNode } from 'react';
 import todoStore, { ITodo } from '../../stores/todoStore';
-import { Content, Tabs, Tab, List, Container, Fab, Icon } from 'native-base';
+import { Tabs, Tab, Container, Fab, Icon } from 'native-base';
 import { partition } from 'lodash';
 import { observer } from 'mobx-react';
 import SwipeableTodo from '../../components/swipeable-todo';
+import { FlatList } from 'react-native';
 
 @observer
 export default class TodoList extends Component<any> {
@@ -16,7 +17,7 @@ export default class TodoList extends Component<any> {
         const [completed, incompleted] = partition(todos, (todo: ITodo) => todo.isComplete);
         return (
             <Container>
-                <Tabs locked={true}>
+                <Tabs locked>
                     <Tab heading="Todo">
                         {this.renderTodoList(incompleted)}
                     </Tab>
@@ -33,10 +34,13 @@ export default class TodoList extends Component<any> {
 
     private renderTodoList(todos: Array<ITodo>): ReactNode {
         return (
-            <Content>
-                <List dataArray={todos} renderRow={(item) => <SwipeableTodo key={item.id} item={item} />} >
-                </List>
-            </Content>
+            <FlatList
+                keyExtractor={(item) => item.id}
+                data={todos}
+                numColumns={1}
+                initialNumToRender={5}
+                renderItem={({ item }) => <SwipeableTodo item={item} />} >
+            </FlatList>
         )
     }
 }
